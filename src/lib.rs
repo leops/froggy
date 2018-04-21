@@ -43,12 +43,20 @@ pub use weak::WeakPointer;
 type Index = usize;
 
 /// Reference counter type. It doesn't make sense to allocate too much bit for it in regular applications.
-// TODO: control by a cargo feature
+#[cfg(feature = "refcount-u16")]
 type RefCount = u16;
+#[cfg(feature = "refcount-u32")]
+type RefCount = u32;
+#[cfg(feature = "refcount-u64")]
+type RefCount = u64;
 
 /// Epoch type determines the number of overwrites of components in storage.
-/// TODO: control by a cargo feature
+#[cfg(feature = "epoch-u16")]
 type Epoch = u16;
+#[cfg(feature = "epoch-u32")]
+type Epoch = u32;
+#[cfg(feature = "epoch-u64")]
+type Epoch = u64;
 
 type StorageId = u8;
 static STORAGE_UID: AtomicUsize = ATOMIC_USIZE_INIT;
