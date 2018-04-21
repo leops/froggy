@@ -73,6 +73,14 @@ pub fn from_pointer<T>(pointer: &Pointer<T>) -> WeakPointer<T> {
     }
 }
 
+#[inline]
+pub(crate) fn from_item<T>(data: PointerData, pending: PendingRef) -> WeakPointer<T> {
+    WeakPointer {
+        data, pending,
+        marker: PhantomData,
+    }
+}
+
 impl<T> Clone for WeakPointer<T> {
     #[inline]
     fn clone(&self) -> WeakPointer<T> {

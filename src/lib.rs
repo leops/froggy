@@ -415,6 +415,19 @@ impl<T> Storage<T> {
         }
     }
 
+    /// Pin an iterated item with a newly created `WeakPointer`.
+    pub fn pin_weak(&self, item: &Item<T>) -> WeakPointer<T> {
+        let pending = self.pending.lock();
+        weak::from_item(
+            PointerData::new(
+                item.index,
+                pending.get_epoch(item.index),
+                self.id,
+            ),
+            self.pending.clone(),
+        )
+    }
+
     /// Split the storage according to the provided pointer, returning
     /// the (left slice, pointed data, right slice) triple, where:
     /// left slice contains all the elements that would be iterated prior to the given one,
